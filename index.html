@@ -392,7 +392,6 @@
                     0506368655
                 </p>
 
-                <!-- CHANGED: updated Instagram and WhatsApp links -->
                 <div class="social-icons">
 
                     <a href="https://wa.me/233506368655" target="_blank">
@@ -405,9 +404,12 @@
 
                 </div>
 
+                <!-- CHANGED: CV download made fully responsive -->
                 <a href="images/my-cv.pdf"
-                   download
+                   download="Graphical_Joe_CV"
+                   target="_blank"
                    class="btn btn2">
+                   <i class="fa-solid fa-download"></i>
                    Download CV
                 </a>
 
@@ -525,34 +527,28 @@
 
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 <script>
+
+    emailjs.init("PC3wUVKLM6qcDZc5v");
 
     document.getElementById("contact-form").addEventListener("submit", function(e) {
 
         e.preventDefault();
 
         let form = e.target;
-        let data = new FormData(form);
 
-        fetch("https://formspree.io/f/xqenjepv", {
-            method: "POST",
-            body: data,
-            headers: {
-                "Accept": "application/json"
-            }
+        emailjs.sendForm("GJ Media", "template_ry0mzdc", form)
+
+        .then(function() {
+            form.reset();
+            window.scrollTo({ top: 0, behavior: "smooth" });
         })
-        .then(function(response) {
 
-            if (response.ok) {
-                form.reset();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            } else {
-                alert("Something went wrong. Please try again.");
-            }
-
-        })
         .catch(function(error) {
-            alert("Network error. Please check your connection.");
+            alert("Something went wrong. Please try again.");
+            console.error(error);
         });
 
     });
